@@ -8,6 +8,7 @@ has document => (
     isa => 'PPI::Document',
 );
 
+sub applies_to { 'PPI::Document' }
 sub applies_to_metaclass { 'Class::MOP::Class' }
 
 around violation => sub {
