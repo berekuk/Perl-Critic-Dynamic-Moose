@@ -25,7 +25,6 @@ sub violates_metaclass {
     return @violations;
 }
 
-__PACKAGE__->meta->make_immutable;
 no Moose;
 
 1;

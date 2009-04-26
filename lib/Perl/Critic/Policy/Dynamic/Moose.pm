@@ -63,7 +63,6 @@ sub find_packages {
            @{ $doc->find('PPI::Statement::Package') || [] };
 }
 
-__PACKAGE__->meta->make_immutable;
 no Moose;
 
 1;
