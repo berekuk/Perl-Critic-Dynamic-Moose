@@ -48,8 +48,11 @@ sub compile_document {
     my $self = shift;
     my $doc = $self->document;
 
-    eval "$doc";
-    die "Unable to execute " . $doc->filename . ": $@";
+    my $source_code = $doc->content;
+
+    eval $source_code;
+
+    die "Unable to execute " . $doc->filename . ": $@" if $@;
 }
 
 sub find_packages {
