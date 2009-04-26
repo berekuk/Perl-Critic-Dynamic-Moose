@@ -49,7 +49,7 @@ sub compile_document {
     my $doc = $self->document;
 
     eval "$doc";
-    die "Unable to execute " . $doc->file . ": $@";
+    die "Unable to execute " . $doc->filename . ": $@";
 }
 
 sub find_packages {
