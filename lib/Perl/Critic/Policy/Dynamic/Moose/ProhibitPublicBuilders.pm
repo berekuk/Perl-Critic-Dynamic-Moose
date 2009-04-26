@@ -2,8 +2,8 @@ package Perl::Critic::Policy::Dynamic::Moose::ProhibitPublicBuilders;
 use Moose;
 extends 'Perl::Critic::Policy::Dynamic::Moose';
 
-Readonly::Scalar my $DESC = q{Builder method name without a leading underscore};
-Readonly::Scalar my $EXPL = q{Prefix builder method names with an underscore};
+Readonly::Scalar my $DESC => q{Builder method name without a leading underscore};
+Readonly::Scalar my $EXPL => q{Prefix builder method names with an underscore};
 
 sub violates_metaclass {
     my $self = shift;
