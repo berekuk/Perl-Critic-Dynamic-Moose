@@ -17,7 +17,7 @@ sub violates_metaclass {
 
         next if !$attribute->has_builder;
 
-        if ($attribute->builder =~ /^_/) {
+        if ($attribute->builder !~ /^_/) {
             push @violations, $self->violation($DESC, $EXPL);
         }
     }
