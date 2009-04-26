@@ -32,8 +32,11 @@ sub violates_dynamic {
 
     my @violations;
     for my $package (@packages) {
-        my $meta = Class::MOP::class_of($package);
-        next unless grep { $meta->isa($_) } $self->applies_to_metaclass;
+        my $meta = Class::MOP::class_of($package)
+            or next;
+
+        grep { $meta->isa($_) } $self->applies_to_metaclass
+            or next;
 
         push @violations, $self->violates_metaclass($meta, $doc);
     }
@@ -46,6 +49,7 @@ sub compile_document {
     my $doc = $self->document;
 
     eval "$doc";
+    die "Unable to execute " . $doc->file . ": $@";
 }
 
 sub find_packages {
