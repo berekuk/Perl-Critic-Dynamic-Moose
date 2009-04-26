@@ -1,0 +1,8 @@
+=pod
+
+=head1 NAME
+
+Perl::Critic::Dynamic::Moose
+
+=cut
+
