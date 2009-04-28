@@ -2,12 +2,13 @@ package Perl::Critic::Policy::DynamicMoose::ProhibitPublicBuilders;
 use Moose;
 extends 'Perl::Critic::Policy::DynamicMoose';
 
-Readonly::Scalar my $DESC => q{Builder method name without a leading underscore};
 Readonly::Scalar my $EXPL => q{Prefix builder method names with an underscore};
 
 sub violates_metaclass {
     my $self = shift;
     my $meta = shift;
+
+    my $classname = $meta->name;
 
     my @violations;
 
@@ -17,8 +18,11 @@ sub violates_metaclass {
 
         next if !$attribute->has_builder;
 
-        if ($attribute->builder !~ /^_/) {
-            push @violations, $self->violation($DESC, $EXPL);
+        my $builder = $attribute->builder;
+
+        if ($builder !~ /^_/) {
+            my $desc = "Builder method '$builder' of attribute '$attribute' of class '$classname' is public";
+            push @violations, $self->violation($desc, $EXPL);
         }
     }
 
