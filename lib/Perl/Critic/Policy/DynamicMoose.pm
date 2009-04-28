@@ -1,4 +1,4 @@
-package Perl::Critic::Policy::Dynamic::Moose;
+package Perl::Critic::Policy::DynamicMoose;
 use Moose;
 use MooseX::NonMoose;
 extends 'Perl::Critic::DynamicPolicy';
