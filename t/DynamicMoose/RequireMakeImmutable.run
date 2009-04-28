@@ -1,0 +1,39 @@
+## name Makes immutable
+## failures 0
+## cut
+
+package Class;
+use Moose;
+
+has attr => (
+    is => 'rw',
+);
+
+__PACKAGE__->meta->make_immutable;
+
+#-----------------------------------------------------------------------------
+
+## name Does not make immutable
+## failures 1
+## cut
+
+package Class;
+use Moose;
+
+has attr => (
+    is => 'rw',
+    builder => '_build_attr',
+);
+
+#-----------------------------------------------------------------------------
+
+## name Does not statically make immutable
+## failures 0
+## cut
+
+for (1 .. 5) {
+    my $class = Class::MOP::Class->create("Foo$_");
+    my $method = join '_', "make", "immutable";
+    $class->$method;
+}
+
