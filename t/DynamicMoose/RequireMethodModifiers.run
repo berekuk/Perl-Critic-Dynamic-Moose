@@ -170,3 +170,87 @@ extends 'Parent';
 
 after foo => sub {};
 
+#-----------------------------------------------------------------------------
+
+## name Pull in a method from a role. Could go either way here.
+## failures 1
+## cut
+
+package Parent;
+use Moose;
+
+sub foo {}
+
+package Role;
+use Moose::Role;
+
+sub foo {}
+
+package Child;
+use Moose;
+extends 'Parent';
+with 'Role';
+
+#-----------------------------------------------------------------------------
+
+## name Grandparent
+## failures 1
+## cut
+
+package Grandparent;
+use Moose;
+
+sub foo {}
+
+package Parent;
+use Moose;
+extends 'Grandparent';
+
+sub bar {}
+
+package Child;
+use Moose;
+extends 'Parent';
+
+sub foo {}
+
+#-----------------------------------------------------------------------------
+
+## name Grandparent with modifiers
+## failures 0
+## cut
+
+package Grandparent;
+use Moose;
+
+sub foo {}
+
+package Parent;
+use Moose;
+extends 'Grandparent';
+
+before foo => sub {};
+
+package Child;
+use Moose;
+extends 'Parent';
+
+after foo => sub {};
+
+#-----------------------------------------------------------------------------
+
+## name Wrapping an implicit override
+## failures 1
+## cut
+
+package Parent;
+use Moose;
+
+sub foo {}
+
+package Child;
+use Moose;
+extends 'Parent';
+
+before foo => sub {};
+sub foo {}

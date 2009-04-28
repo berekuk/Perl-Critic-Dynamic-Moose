@@ -19,10 +19,17 @@ sub violates_metaclass {
     for my $name (keys %$map) {
         my $method = $map->{$name};
 
-        # Modifiers are always fine.
-        next if $method->isa('Class::MOP::Method::Wrapped')
-             || $method->isa('Moose::Meta::Method::Overridden')
+        # override and augment modifiers are always fine.
+        next if $method->isa('Moose::Meta::Method::Overridden')
              || $method->isa('Moose::Meta::Method::Augmented');
+
+        # Since we can implicitly override and wrap in the same class, we
+        # need to be a little more careful here.
+        if ($method->isa('Class::MOP::Method::Wrapped')) {
+            my $orig_method = $method->get_original_method;
+            next if $method->associated_metaclass->name
+                 ne $orig_method->associated_metaclass->name;
+        }
 
         # Generated methods
         next if $method->isa('Class::MOP::Method::Generated');
