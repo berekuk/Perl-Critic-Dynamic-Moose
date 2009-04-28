@@ -254,3 +254,19 @@ extends 'Parent';
 
 before foo => sub {};
 sub foo {}
+
+#-----------------------------------------------------------------------------
+
+## name Imported functions
+## failures 0
+## cut
+
+package Parent;
+use Moose;
+use List::Util 'reduce';
+
+package Child;
+use Moose;
+extends 'Parent';
+use List::Util 'reduce';
+
