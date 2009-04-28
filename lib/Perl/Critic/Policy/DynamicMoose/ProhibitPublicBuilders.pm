@@ -2,9 +2,11 @@ package Perl::Critic::Policy::DynamicMoose::ProhibitPublicBuilders;
 use Moose;
 extends 'Perl::Critic::Policy::DynamicMoose';
 
+use Perl::Critic::Utils ':severities';
 use Perl::Critic::Utils::Moose 'meta_type';
 
 Readonly::Scalar my $EXPL => q{Prefix builder method names with an underscore};
+sub default_severity { $SEVERITY_MEDIUM }
 
 augment applies_to_metaclass => sub { 'Moose::Meta::Role' };
 
