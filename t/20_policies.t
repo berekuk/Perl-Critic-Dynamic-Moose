@@ -67,7 +67,7 @@ for my $policy ( sort keys %$subtests ) {
             }
         }
         else {
-            #die $EVAL_ERROR if $EVAL_ERROR;
+            die $EVAL_ERROR if $EVAL_ERROR;
             is($number_of_violations, $subtest->{failures}, $desc);
         }
     }
