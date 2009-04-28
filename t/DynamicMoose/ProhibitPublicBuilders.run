@@ -66,3 +66,90 @@ __PACKAGE__->meta->add_attribute(attr => (
     builder => $builder,
 ));
 
+#-----------------------------------------------------------------------------
+
+## name Role sans builder
+## failures 0
+## cut
+
+package Role;
+use Moose::Role;
+
+has attr => (
+    is => 'rw',
+);
+
+#-----------------------------------------------------------------------------
+
+## name Role with private builder
+## failures 0
+## cut
+
+package Role;
+use Moose::Role;
+
+has attr => (
+    is => 'rw',
+    builder => '_build_attr',
+);
+
+#-----------------------------------------------------------------------------
+
+## name Role with public builder
+## failures 1
+## cut
+
+package Role;
+use Moose::Role;
+
+has attr => (
+    is => 'rw',
+    builder => 'build_attr',
+);
+
+#-----------------------------------------------------------------------------
+
+## name Public role builder method, named dynamically
+## failures 1
+## cut
+
+package Role;
+use Moose::Role;
+
+my $builder = 'build_' . rand;
+__PACKAGE__->meta->add_attribute(attr => (
+    is => 'rw',
+    builder => $builder,
+));
+
+#-----------------------------------------------------------------------------
+
+## name Lazy build
+## failures 0
+## cut
+
+package Class;
+use Moose;
+
+has foo => (
+    is => 'rw',
+    lazy_build => 1,
+);
+
+#-----------------------------------------------------------------------------
+
+## name The Gauntlet
+## failures 0
+## cut
+
+for (1 .. 5) {
+    Class::MOP::Class->create_anon_class(
+        attributes => [
+            Class::MOP::Attribute->new(
+                name => "foo_$_",
+                builder => "build_foo_$_",
+            ),
+        ],
+    );
+}
+
