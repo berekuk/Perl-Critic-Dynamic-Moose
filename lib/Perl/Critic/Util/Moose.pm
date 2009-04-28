@@ -1,9 +1,9 @@
 package Perl::Critic::Util::Moose;
 use strict;
 use warnings;
-use base 'Exporter';
-
-our @EXPORTS_OK = 'meta_type';
+use Sub::Exporter -setup => {
+    exports => ['meta_type'],
+};
 
 my @types = (
     [ 'Moose::Meta::Role'           => 'role'            ],

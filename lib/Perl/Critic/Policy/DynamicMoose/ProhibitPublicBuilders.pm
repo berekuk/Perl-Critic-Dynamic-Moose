@@ -2,6 +2,8 @@ package Perl::Critic::Policy::DynamicMoose::ProhibitPublicBuilders;
 use Moose;
 extends 'Perl::Critic::Policy::DynamicMoose';
 
+use Perl::Critic::Util::Moose 'meta_type';
+
 Readonly::Scalar my $EXPL => q{Prefix builder method names with an underscore};
 
 augment applies_to_metaclass => sub { 'Moose::Meta::Role' };
@@ -30,7 +32,8 @@ sub violates_metaclass {
         }
 
         if ($builder !~ /^_/) {
-            my $desc = "Builder method '$builder' of attribute '$attribute' of class '$classname' is public";
+            my $type = meta_type($meta);
+            my $desc = "Builder method '$builder' of attribute '$attribute' of $type '$classname' is public";
             push @violations, $self->violation($desc, $EXPL);
         }
     }
