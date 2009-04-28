@@ -1,0 +1,11 @@
+## name No builder method
+## failures 0
+## cut
+
+package Class;
+use Moose;
+
+has attr => (
+    is => 'rw',
+);
+
