@@ -32,12 +32,13 @@ sub violates_dynamic {
     my $doc  = shift;
 
     $self->document($doc);
-    $self->compile_document;
 
-    my @packages = $self->find_packages;
+    my $old_packages = $self->find_packages;
+    $self->compile_document;
+    my @new_packages = $self->new_packages($old_packages);
 
     my @violations;
-    for my $package (@packages) {
+    for my $package (@new_packages) {
         my $meta = Class::MOP::class_of($package)
             or next;
 
@@ -63,10 +64,22 @@ sub compile_document {
 
 sub find_packages {
     my $self = shift;
-    my $doc = $self->document;
+    return [ Class::MOP::get_all_metaclass_names ];
+}
 
-    return map { $_->namespace }
-           @{ $doc->find('PPI::Statement::Package') || [] };
+sub new_packages {
+    my $self = shift;
+    my $old  = shift;
+    my @new;
+    my %seen;
+
+    $seen{$_} = 1 for @$old;
+
+    for (@{ $self->find_packages }) {
+        push @new, $_ if !$seen{$_}++;
+    }
+
+    return @new;
 }
 
 no Moose;
