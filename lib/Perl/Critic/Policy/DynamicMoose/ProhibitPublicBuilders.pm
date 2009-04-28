@@ -4,6 +4,8 @@ extends 'Perl::Critic::Policy::DynamicMoose';
 
 Readonly::Scalar my $EXPL => q{Prefix builder method names with an underscore};
 
+augment applies_to_metaclass => sub { 'Moose::Meta::Role' };
+
 sub violates_metaclass {
     my $self = shift;
     my $meta = shift;
@@ -15,10 +17,17 @@ sub violates_metaclass {
     my $attributes = $meta->get_attribute_map;
     for my $name (keys %$attributes) {
         my $attribute = $attributes->{$name};
+        my $builder;
 
-        next if !$attribute->has_builder;
-
-        my $builder = $attribute->builder;
+        if (blessed($attribute)) {
+            next if !$attribute->has_builder;
+            $builder = $attribute->builder;
+        }
+        else {
+            # Roles suck :(
+            next if !defined($attribute->{builder});
+            $builder = $attribute->{builder};
+        }
 
         if ($builder !~ /^_/) {
             my $desc = "Builder method '$builder' of attribute '$attribute' of class '$classname' is public";

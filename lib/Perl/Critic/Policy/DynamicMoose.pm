@@ -10,7 +10,7 @@ has document => (
 );
 
 sub applies_to { 'PPI::Document' }
-sub applies_to_metaclass { 'Class::MOP::Class' }
+sub applies_to_metaclass { 'Class::MOP::Class', inner() }
 
 around violation => sub {
     my $orig    = shift;
