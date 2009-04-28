@@ -9,3 +9,31 @@ has attr => (
     is => 'rw',
 );
 
+#-----------------------------------------------------------------------------
+
+## name Private builder method
+## failures 0
+## cut
+
+package Class;
+use Moose;
+
+has attr => (
+    is => 'rw',
+    builder => '_build_attr',
+);
+
+#-----------------------------------------------------------------------------
+
+## name Public builder method
+## failures 1
+## cut
+
+package Class;
+use Moose;
+
+has attr => (
+    is => 'rw',
+    builder => 'build_attr',
+);
+
