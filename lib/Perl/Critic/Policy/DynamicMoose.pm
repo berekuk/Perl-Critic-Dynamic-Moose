@@ -93,3 +93,27 @@ no Moose;
 
 1;
 
+__END__
+
+=head1 NAME
+
+Perl::Critic::Policy::DynamicMoose
+
+=head1 DESCRIPTION
+
+The included policies are:
+
+=over 4
+
+=item L<Perl::Critic::Policy::DynamicMoose::ProhibitPublicBuilders>
+
+Prohibit public builder methods for attributes. [Severity: 3]
+
+=back
+
+=head1 AUTHOR
+
+Shawn M Moore, C<sartak@bestpractical.com>
+
+=cut
+

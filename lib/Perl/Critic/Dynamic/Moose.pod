@@ -4,5 +4,9 @@
 
 Perl::Critic::Dynamic::Moose
 
+=head1 AUTHOR
+
+Shawn M Moore, C<sartak@bestpractical.com>
+
 =cut
 

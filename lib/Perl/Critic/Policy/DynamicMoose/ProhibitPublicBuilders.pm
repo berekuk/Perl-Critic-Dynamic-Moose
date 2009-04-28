@@ -75,5 +75,9 @@ network or mutating files).
 For this Policy to work, all the modules included in your code must be
 installed locally, and must compile without error.
 
+=head1 AUTHOR
+
+Shawn M Moore, C<sartak@bestpractical.com>
+
 =cut
 
