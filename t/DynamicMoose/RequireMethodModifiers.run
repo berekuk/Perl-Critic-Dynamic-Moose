@@ -1,0 +1,172 @@
+## name No superclass
+## failures 0
+## cut
+
+package Class;
+use Moose;
+
+sub foo {}
+sub bar {}
+
+#-----------------------------------------------------------------------------
+
+## name No overriding methods
+## failures 0
+## cut
+
+package Parent;
+
+sub parent {}
+
+package Child;
+use Moose;
+extends 'Parent';
+
+sub child {}
+
+#-----------------------------------------------------------------------------
+
+## name Implicitly overrides a method
+## failures 1
+## cut
+
+package Parent;
+
+sub parent {}
+
+package Child;
+use Moose;
+extends 'Parent';
+
+sub parent {}
+
+#-----------------------------------------------------------------------------
+
+## name Weirdly dispatching methods
+## failures 0
+## cut
+
+package Parent;
+use Moose;
+
+sub BUILD {}
+sub DEMOLISH {}
+
+package Child;
+use Moose;
+extends 'Parent';
+
+sub BUILD {}
+sub DEMOLISH {}
+
+#-----------------------------------------------------------------------------
+
+## name Make immutable
+## failures 0
+## cut
+
+package Parent;
+use Moose;
+
+__PACKAGE__->meta->make_immutable;
+
+package Child;
+use Moose;
+extends 'Parent';
+
+__PACKAGE__->meta->make_immutable;
+
+#-----------------------------------------------------------------------------
+
+## name Many modifiers
+## failures 0
+## cut
+
+package Parent;
+use Moose;
+
+sub foo {}
+
+sub ai { inner() }
+
+sub os {}
+
+package Child;
+use Moose;
+extends 'Parent';
+
+before foo => sub {};
+after  foo => sub {};
+around foo => sub {};
+
+augment ai => sub {};
+
+override os => sub { super };
+
+#-----------------------------------------------------------------------------
+
+## name Pull in a method from a role. Could go either way here.
+## failures 1
+## cut
+
+package Parent;
+use Moose;
+
+sub foo {}
+
+package Role;
+use Moose::Role;
+
+sub foo {}
+
+package Child;
+use Moose;
+extends 'Parent';
+with 'Role';
+
+#-----------------------------------------------------------------------------
+
+## name Grandparent
+## failures 1
+## cut
+
+package Grandparent;
+use Moose;
+
+sub foo {}
+
+package Parent;
+use Moose;
+extends 'Grandparent';
+
+sub bar {}
+
+package Child;
+use Moose;
+extends 'Parent';
+
+sub foo {}
+
+#-----------------------------------------------------------------------------
+
+## name Grandparent with modifiers
+## failures 0
+## cut
+
+package Grandparent;
+use Moose;
+
+sub foo {}
+
+package Parent;
+use Moose;
+extends 'Grandparent';
+
+before foo => sub {};
+
+package Child;
+use Moose;
+extends 'Parent';
+
+after foo => sub {};
+
