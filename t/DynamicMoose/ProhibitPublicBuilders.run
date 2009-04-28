@@ -143,12 +143,13 @@ has foo => (
 ## cut
 
 for (1 .. 5) {
+    my $builder = "build_foo_$_";
     Class::MOP::Class->create(
         "Foo$_",
         attributes => [
             Class::MOP::Attribute->new(
                 name => "foo_$_",
-                builder => "build_foo_$_",
+                builder => $builder,
             ),
         ],
     );
