@@ -4,21 +4,27 @@ use MooseX::NonMoose;
 extends 'Perl::Critic::DynamicPolicy';
 
 has document => (
-    is  => 'rw',
-    isa => 'PPI::Document',
+    is      => 'rw',
+    isa     => 'PPI::Document',
+    handles => [qw/ppi_document/],
 );
 
 sub applies_to { 'PPI::Document' }
 sub applies_to_metaclass { 'Class::MOP::Class' }
 
 around violation => sub {
-    my $orig = shift;
-    my $self = shift;
-    my $desc = shift;
-    my $expl = shift;
-    my $doc  = shift || $self->document;
+    my $orig    = shift;
+    my $self    = shift;
+    my $desc    = shift;
+    my $expl    = shift;
+    my $element = shift;
 
-    return $self->$orig($desc, $expl, $doc, @_);
+    if (!$element) {
+        my $doc = $self->ppi_document;
+        $element = $doc->find('PPI::Element')->[0];
+    }
+
+    return $self->$orig($desc, $expl, $element, @_);
 };
 
 sub violates_dynamic {
