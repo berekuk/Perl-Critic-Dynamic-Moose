@@ -58,6 +58,8 @@ sub violates_dynamic {
     return @violations;
 }
 
+sub violates_metaclass { die "Your policy (" . blessed($_[0]) . ") needs to implement violates_metaclass" }
+
 sub _compile_document {
     my $self = shift;
     my $doc = $self->document;
