@@ -40,9 +40,9 @@ sub violates_dynamic {
 
     $self->document($doc);
 
-    my $old_packages = $self->find_packages;
-    $self->compile_document;
-    my @new_packages = $self->new_packages($old_packages);
+    my $old_packages = $self->_find_packages;
+    $self->_compile_document;
+    my @new_packages = $self->_new_packages($old_packages);
 
     my @violations;
     for my $package (@new_packages) {
@@ -58,7 +58,7 @@ sub violates_dynamic {
     return @violations;
 }
 
-sub compile_document {
+sub _compile_document {
     my $self = shift;
     my $doc = $self->document;
 
@@ -69,12 +69,12 @@ sub compile_document {
     die "Unable to execute " . $doc->filename . ": $@" if $@;
 }
 
-sub find_packages {
+sub _find_packages {
     my $self = shift;
     return [ Class::MOP::get_all_metaclass_names ];
 }
 
-sub new_packages {
+sub _new_packages {
     my $self = shift;
     my $old  = shift;
     my @new;
@@ -82,7 +82,7 @@ sub new_packages {
 
     $seen{$_} = 1 for @$old;
 
-    for (@{ $self->find_packages }) {
+    for (@{ $self->_find_packages }) {
         push @new, $_ if !$seen{$_}++;
     }
 
