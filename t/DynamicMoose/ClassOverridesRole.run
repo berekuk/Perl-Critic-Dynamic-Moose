@@ -1,0 +1,49 @@
+## name No collision
+## failures 0
+## cut
+
+package Role;
+use Moose::Role;
+
+sub role {}
+
+package Class;
+use Moose;
+with 'Role';
+
+sub class {}
+
+#-----------------------------------------------------------------------------
+
+## name Name collision
+## failures 1
+## cut
+
+package Role;
+use Moose::Role;
+
+sub foo {}
+
+package Class;
+use Moose;
+with 'Role';
+
+sub foo {}
+
+#-----------------------------------------------------------------------------
+
+## name Name collision with exclusion
+## failures 0
+## cut
+
+package Role;
+use Moose::Role;
+
+sub foo {}
+
+package Class;
+use Moose;
+with 'Role' => { excludes => 'foo' };
+
+sub foo {}
+
