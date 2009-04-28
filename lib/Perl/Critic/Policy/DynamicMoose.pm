@@ -21,6 +21,12 @@ around violation => sub {
 
     if (!$element) {
         my $doc = $self->ppi_document;
+
+        # Without this hack, Storable complains of being unable to reconstruct
+        # overloading for an unknown package (perhaps PPI::Document?). For some
+        # reason it works for PPI::Element. Anyway, this should hopefully be
+        # replaced with a more useful location, something like
+        # ( class:MyClass / attr:foo / builder:build_foo )
         $element = $doc->find('PPI::Element')->[0];
     }
 
