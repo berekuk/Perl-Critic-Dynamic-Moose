@@ -103,6 +103,57 @@ Perl::Critic::Policy::DynamicMoose
 
 =head1 DESCRIPTION
 
+This class is a base class for dynamic Moose policies. This class facilitates
+critiquing metaclasses (instead of the usual PPI documents). For example, the
+L<Perl::Critic::Policy::DynamicMoose::ProhibitPublicBuilders> policy critiques
+metaclasses by checking whether any of their attributes' builders do not start
+with an underscore. Due to the very dynamic nature of Moose and
+metaprogramming, such policies will be much more effective than static analysis
+at critiquing classes.
+
+=head1 PUBLIC METHODS
+
+=over 4
+
+=item C<applies_to_metaclass>
+
+Returns a list of metaclass names that this policy can critique. By default,
+the list is L<Class::MOP::Class>. You may use the augment modifier to add
+other kinds of metaclasses, such as L<Moose::Meta::Role> without having to
+repeat the L<Class::MOP::Class>:
+
+    augment applies_to_metaclass => sub { 'Moose::Meta::Role' };
+
+Note that only the top-level metaclass is given to you. If you want to critique
+only attributes, then you must do the Visiting yourself.
+
+=item C<applies_to_themes>
+
+Returns a list of themes for Perl::Critic so that users can run a particular
+subset of themes on their code. By default, the list contains C<moose> and
+C<dynamic>. You should use the augment modifier to add more themes instead
+of overriding the method:
+
+    augment themes => sub { 'role' };
+
+=item C<violation>
+
+This extends the regular L<Perl::Critic::Policy/violation> method by providing
+a (rather useless) default value for the C<element> parameter. For nearly all
+cases, there's no easy way to find where a metaclass violation occurred. You
+may still pass such an element if you have one. However, since you probably do
+not, you should be exact in your violation's description.
+
+=item C<violates_metaclass>
+
+This method is required to be overridden by subclasses. It takes a metaclass
+object and the L<Perl::Critic::Document> representing the entire compilation
+unit. It is expected to return a list of L<Perl::Critic::Violation> objects.
+
+=over
+
+=head1 POLICIES
+
 The included policies are:
 
 =over 4
