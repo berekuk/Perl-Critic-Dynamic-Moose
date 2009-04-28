@@ -47,3 +47,19 @@ no Moose;
 
 1;
 
+__END__
+
+=head1 NAME
+
+Perl::Critic::Policy::DynamicMoose::ProhibitPublicBuilders
+
+=head1 DESCRIPTION
+
+An attribute's L<Moose/builder> method is used to provide a default value
+for that attribute. Such methods are rarely intended for external use, and
+should not be considered part of that class's public API. Thus we recommend
+that your attribute builder methods' names are prefixed with an underscore
+to mark them private.
+
+=cut
+
