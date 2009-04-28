@@ -11,7 +11,7 @@ has document => (
 
 sub applies_to { 'PPI::Document' }
 sub applies_to_metaclass { 'Class::MOP::Class', inner() }
-sub default_themes { qw(moose dynamic dynamicmoose), inner() }
+sub default_themes { qw(moose dynamic), inner() }
 
 around violation => sub {
     my $orig    = shift;
