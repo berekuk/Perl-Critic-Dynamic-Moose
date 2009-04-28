@@ -1,4 +1,4 @@
-package Perl::Critic::Util::Moose;
+package Perl::Critic::Utils::Moose;
 use strict;
 use warnings;
 use Sub::Exporter -setup => {

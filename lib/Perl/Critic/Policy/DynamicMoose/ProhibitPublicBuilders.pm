@@ -2,7 +2,7 @@ package Perl::Critic::Policy::DynamicMoose::ProhibitPublicBuilders;
 use Moose;
 extends 'Perl::Critic::Policy::DynamicMoose';
 
-use Perl::Critic::Util::Moose 'meta_type';
+use Perl::Critic::Utils::Moose 'meta_type';
 
 Readonly::Scalar my $EXPL => q{Prefix builder method names with an underscore};
 
