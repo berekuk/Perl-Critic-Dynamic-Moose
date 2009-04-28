@@ -104,9 +104,12 @@ Perl::Critic::Policy::DynamicMoose
 
 =head1 DESCRIPTION
 
+This documentation is written for policy authors. You may instead want
+L<Perl::Critic::Dynamic::Moose>.
+
 This class is a base class for dynamic Moose policies. This class facilitates
-critiquing metaclasses (instead of the usual PPI documents). For example, the
-L<Perl::Critic::Policy::DynamicMoose::ProhibitPublicBuilders> policy critiques
+critiquing metaclasses (instead of the usual PPI documents). For example,
+L<Perl::Critic::Policy::DynamicMoose::ProhibitPublicBuilders> critiques
 metaclasses by checking whether any of their attributes' builders do not start
 with an underscore. Due to the very dynamic nature of Moose and
 metaprogramming, such policies will be much more effective than static analysis
