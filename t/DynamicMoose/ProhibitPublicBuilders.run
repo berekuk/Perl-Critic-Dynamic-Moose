@@ -37,3 +37,32 @@ has attr => (
     builder => 'build_attr',
 );
 
+#-----------------------------------------------------------------------------
+
+## name Public builder method, declared dynamically
+## failures 1
+## cut
+
+package Class;
+use Moose;
+
+__PACKAGE__->meta->add_attribute(attr => (
+    is => 'rw',
+    builder => 'build_attr',
+));
+
+#-----------------------------------------------------------------------------
+
+## name Public builder method, named dynamically
+## failures 1
+## cut
+
+package Class;
+use Moose;
+
+my $builder = 'build_' . rand;
+__PACKAGE__->meta->add_attribute(attr => (
+    is => 'rw',
+    builder => $builder,
+));
+
