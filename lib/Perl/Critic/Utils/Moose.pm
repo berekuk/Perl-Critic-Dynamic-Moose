@@ -6,15 +6,16 @@ use Sub::Exporter -setup => {
 };
 
 my @types = (
-    [ 'Moose::Meta::Role'           => 'role'            ],
-    [ 'Moose::Meta::TypeCoercion'   => 'type coercion'   ],
-    [ 'Moose::Meta::TypeConstraint' => 'type constraint' ],
+    [ 'Moose::Meta::Role'              => 'role'            ],
+    [ 'Moose::Meta::TypeCoercion'      => 'type coercion'   ],
+    [ 'Moose::Meta::TypeConstraint'    => 'type constraint' ],
+    [ 'Moose::Meta::Role::Application' => 'role application' ],
 
-    [ 'Class::MOP::Method'          => 'method'          ],
-    [ 'Class::MOP::Attribute'       => 'attribute'       ],
-    [ 'Class::MOP::Class'           => 'class'           ],
-    [ 'Class::MOP::Module'          => 'module'          ],
-    [ 'Class::MOP::Package'         => 'package'         ],
+    [ 'Class::MOP::Method'             => 'method'          ],
+    [ 'Class::MOP::Attribute'          => 'attribute'       ],
+    [ 'Class::MOP::Class'              => 'class'           ],
+    [ 'Class::MOP::Module'             => 'module'          ],
+    [ 'Class::MOP::Package'            => 'package'         ],
 );
 
 sub meta_type {
