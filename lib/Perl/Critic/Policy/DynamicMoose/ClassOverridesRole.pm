@@ -1,6 +1,6 @@
 package Perl::Critic::Policy::DynamicMoose::ClassOverridesRole;
 use Moose;
-extends 'Perl::Critic::Policy::DynamicMoose';
+extends 'Perl::Critic::DynamicMoosePolicy';
 
 use Perl::Critic::Utils ':severities';
 

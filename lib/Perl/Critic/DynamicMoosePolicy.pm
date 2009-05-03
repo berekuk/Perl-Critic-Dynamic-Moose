@@ -1,4 +1,4 @@
-package Perl::Critic::Policy::DynamicMoose;
+package Perl::Critic::DynamicMoosePolicy;
 use Moose;
 use MooseX::NonMoose;
 extends 'Perl::Critic::DynamicPolicy';
@@ -100,7 +100,7 @@ __END__
 
 =head1 NAME
 
-Perl::Critic::Policy::DynamicMoose
+Perl::Critic::DynamicMoosePolicy
 
 =head1 DESCRIPTION
 

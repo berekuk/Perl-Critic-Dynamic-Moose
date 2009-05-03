@@ -1,6 +1,6 @@
 package Perl::Critic::Policy::DynamicMoose::RequireMakeImmutable;
 use Moose;
-extends 'Perl::Critic::Policy::DynamicMoose';
+extends 'Perl::Critic::DynamicMoosePolicy';
 
 use Perl::Critic::Utils ':severities';
 use Perl::Critic::Utils::Moose 'meta_type';
