@@ -14,10 +14,8 @@ sub violates_metaclass {
 
     my @violations;
 
-    my $map = $meta->get_method_map;
-
-    for my $name (keys %$map) {
-        my $method = $map->{$name};
+    for my $name ($meta->get_method_list) {
+        my $method = $meta->get_method($name);
 
         # override and augment modifiers are always fine.
         next if $method->isa('Moose::Meta::Method::Overridden')
