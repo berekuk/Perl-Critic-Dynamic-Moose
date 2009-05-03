@@ -257,6 +257,25 @@ sub foo {}
 
 #-----------------------------------------------------------------------------
 
+## name Wrapping an implicit override twice
+## failures 1
+## cut
+
+package Parent;
+use Moose;
+
+sub foo {}
+
+package Child;
+use Moose;
+extends 'Parent';
+
+before foo => sub {};
+before foo => sub {};
+sub foo {}
+
+#-----------------------------------------------------------------------------
+
 ## name Imported functions
 ## failures 0
 ## cut
