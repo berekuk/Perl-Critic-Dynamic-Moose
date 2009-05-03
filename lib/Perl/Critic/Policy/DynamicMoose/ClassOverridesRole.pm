@@ -7,6 +7,9 @@ use Perl::Critic::Utils ':severities';
 Readonly::Scalar my $EXPL => q{};
 sub default_severity { $SEVERITY_MEDIUM }
 
+# Class::MOP::Class has no roles
+sub applies_to_metaclass { 'Moose::Meta::Class' }
+
 sub violates_metaclass {
     my $self = shift;
     my $meta = shift;
