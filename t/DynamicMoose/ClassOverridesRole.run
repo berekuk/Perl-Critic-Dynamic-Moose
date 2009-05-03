@@ -68,3 +68,20 @@ use Moose;
 with 'Role::A';
 with 'Role::B';
 
+#-----------------------------------------------------------------------------
+
+## name Name collision with aliasing
+## failures 0
+## cut
+
+package Role;
+use Moose::Role;
+
+sub foo {}
+
+package Class;
+use Moose;
+with 'Role' => { alias => { foo => 'foo_bar' } };
+
+sub foo {}
+

@@ -20,6 +20,7 @@ sub violates_metaclass {
         my $role = $application->role;
         for my $method ($role->get_method_list) {
             next if $application->is_method_excluded($method);
+            next if $application->is_method_aliased($method);
 
             my $method_object = $class->get_method($method)
                 or next;
