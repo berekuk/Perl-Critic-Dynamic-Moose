@@ -47,3 +47,24 @@ with 'Role' => { excludes => 'foo' };
 
 sub foo {}
 
+#-----------------------------------------------------------------------------
+
+## name Name collision from two roles
+## failures 1
+## cut
+
+package Role::A;
+use Moose::Role;
+
+sub foo {}
+
+package Role::B;
+use Moose::Role;
+
+sub foo {}
+
+package Class;
+use Moose;
+with 'Role::A';
+with 'Role::B';
+

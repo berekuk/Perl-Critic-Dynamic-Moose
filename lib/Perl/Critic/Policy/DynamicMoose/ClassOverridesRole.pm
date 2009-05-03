@@ -26,7 +26,9 @@ sub violates_metaclass {
 
             # no metadata, should check source role to make sure it's the
             # same as $role
-            next if $method_object->isa('Moose::Meta::Role::Method');
+            if ($method_object->isa('Moose::Meta::Role::Method')) {
+                next if $method_object->original_package_name eq $role->name;
+            }
 
             my $class_name = $class->name;
             my $role_name  = $role->name;
