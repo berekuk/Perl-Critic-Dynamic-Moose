@@ -10,12 +10,12 @@ sub default_severity { $SEVERITY_LOW }
 
 sub violates_metaclass {
     my $self = shift;
-    my $meta = shift;
+    my $class = shift;
 
     my @violations;
 
-    for my $name ($meta->get_method_list) {
-        my $method = $meta->get_method($name);
+    for my $name ($class->get_method_list) {
+        my $method = $class->get_method($name);
 
         # override and augment modifiers are always fine.
         next if $method->isa('Moose::Meta::Method::Overridden')
@@ -35,12 +35,12 @@ sub violates_metaclass {
         # XXX: this freaking sucks
         next if $name eq 'meta' || $name eq 'BUILD' || $name eq 'DEMOLISH';
 
-        my $next = $meta->find_next_method_by_name($name);
+        my $next = $class->find_next_method_by_name($name);
 
         # Adding new methods is always fine.
         next if !$next;
 
-        push @violations, $self->violation("The '$name' method of class " . $meta->name . " does not use a method modifier to override its superclass implementation.", $EXPL);
+        push @violations, $self->violation("The '$name' method of class " . $class->name . " does not use a method modifier to override its superclass implementation.", $EXPL);
     }
 
     return @violations;
