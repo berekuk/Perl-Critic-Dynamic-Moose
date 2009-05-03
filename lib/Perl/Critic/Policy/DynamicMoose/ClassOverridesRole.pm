@@ -25,8 +25,6 @@ sub violates_metaclass {
             my $method_object = $class->get_method($method)
                 or next;
 
-            # no metadata, should check source role to make sure it's the
-            # same as $role
             if ($method_object->isa('Moose::Meta::Role::Method')) {
                 next if $method_object->original_package_name eq $role->name;
             }
