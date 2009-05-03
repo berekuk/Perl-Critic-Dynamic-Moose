@@ -18,9 +18,8 @@ sub violates_metaclass {
 
     my @violations;
 
-    my $attributes = $meta->get_attribute_map;
-    for my $name (keys %$attributes) {
-        my $attribute = $attributes->{$name};
+    for my $name ($meta->get_attribute_list) {
+        my $attribute = $meta->get_attribute($name);
         my $builder;
 
         if (blessed($attribute)) {
