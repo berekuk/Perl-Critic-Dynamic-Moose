@@ -26,7 +26,7 @@ sub violates_metaclass {
                 or next;
 
             if ($method_object->isa('Moose::Meta::Role::Method')) {
-                next if $method_object->original_package_name eq $role->name;
+                next if $method_object->body == $role->get_method($method)->body;
             }
 
             my $class_name = $class->name;

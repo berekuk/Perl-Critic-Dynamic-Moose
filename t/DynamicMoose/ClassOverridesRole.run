@@ -85,3 +85,29 @@ with 'Role' => { alias => { foo => 'foo_bar' } };
 
 sub foo {}
 
+
+#-----------------------------------------------------------------------------
+
+## name Collision via same role
+## failures 0
+## cut
+
+package Ur::Role;
+use Moose::Role;
+
+sub foo { die "yawr" }
+
+package Role::Refined;
+use Moose::Role;
+with 'Ur::Role';
+
+package Role::Distinguished;
+use Moose::Role;
+with 'Ur::Role';
+
+package Class;
+use Moose;
+
+with 'Role::Refined';
+with 'Role::Distinguished';
+
