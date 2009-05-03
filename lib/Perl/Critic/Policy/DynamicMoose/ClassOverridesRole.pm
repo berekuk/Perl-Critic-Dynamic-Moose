@@ -4,17 +4,39 @@ extends 'Perl::Critic::Policy::DynamicMoose';
 
 use Perl::Critic::Utils ':severities';
 
-Readonly::Scalar my $EXPL => q{};
+Readonly::Scalar my $EXPL => q{Explicitly exclude overriden methods};
 sub default_severity { $SEVERITY_MEDIUM }
 
 # Class::MOP::Class has no roles
 sub applies_to_metaclass { 'Moose::Meta::Class' }
 
 sub violates_metaclass {
-    my $self = shift;
-    my $meta = shift;
+    my $self  = shift;
+    my $class = shift;
 
-    return;
+    my @violations;
+
+    for my $application ($class->role_applications) {
+        my $role = $application->role;
+        for my $method ($role->get_method_list) {
+            next if $application->is_method_excluded($method);
+
+            my $method_object = $class->get_method($method)
+                or next;
+
+            # no metadata, should check source role to make sure it's the
+            # same as $role
+            next if $method_object->isa('Moose::Meta::Role::Method');
+
+            my $class_name = $class->name;
+            my $role_name  = $role->name;
+
+            my $desc = "Class '$class_name' method '$method' implicitly overrides the same method from role '$role_name'";
+            push @violations, $self->violation($desc, $EXPL);
+        }
+    }
+
+    return @violations;
 }
 
 no Moose;
