@@ -9,7 +9,7 @@ Readonly::Scalar my $EXPL => q{Method modifiers make it clear that you're overri
 sub default_severity { $SEVERITY_LOW }
 
 sub violates_metaclass {
-    my $self = shift;
+    my $self  = shift;
     my $class = shift;
 
     my @violations;
