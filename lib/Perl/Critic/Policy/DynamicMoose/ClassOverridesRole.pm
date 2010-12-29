@@ -26,6 +26,7 @@ sub violates_metaclass {
                 or next;
 
             next if $method eq 'meta';
+            next if $method =~ m{^\(};
 
             if ($method_object->isa('Moose::Meta::Role::Method')) {
                 next if $method_object->body == $role->get_method($method)->body;
@@ -35,6 +36,7 @@ sub violates_metaclass {
             my $role_name  = $role->name;
 
             my $desc = "Class '$class_name' method '$method' implicitly overrides the same method from role '$role_name'";
+
             push @violations, $self->violation($desc, $EXPL);
         }
     }

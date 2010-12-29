@@ -111,3 +111,20 @@ use Moose;
 with 'Role::Refined';
 with 'Role::Distinguished';
 
+#-----------------------------------------------------------------------------
+
+## name Overloads collision
+## failures 0
+## cut
+
+package Role;
+use MooseX::Role::WithOverloading;
+use Moose::Role;
+
+use overload '""' => sub { "role" };
+
+package Class;
+use Moose;
+with 'Role';
+
+use overload '""' => sub { "class" };
