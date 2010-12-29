@@ -9,3 +9,4 @@ inc/
 pm_to_blib
 *.swp
 /.build
+/Perl-Critic-Dynamic-Moose-*
