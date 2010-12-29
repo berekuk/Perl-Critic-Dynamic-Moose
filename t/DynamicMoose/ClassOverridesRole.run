@@ -43,7 +43,7 @@ sub foo {}
 
 package Class;
 use Moose;
-with 'Role' => { excludes => 'foo' };
+with 'Role' => { -excludes => 'foo' };
 
 sub foo {}
 
@@ -81,7 +81,7 @@ sub foo {}
 
 package Class;
 use Moose;
-with 'Role' => { alias => { foo => 'foo_bar' } };
+with 'Role' => { -alias => { foo => 'foo_bar' } };
 
 sub foo {}
 
