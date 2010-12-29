@@ -154,7 +154,7 @@ This method is required to be overridden by subclasses. It takes a metaclass
 object and the L<Perl::Critic::Document> representing the entire compilation
 unit. It is expected to return a list of L<Perl::Critic::Violation> objects.
 
-=over
+=back
 
 =head1 POLICIES
 

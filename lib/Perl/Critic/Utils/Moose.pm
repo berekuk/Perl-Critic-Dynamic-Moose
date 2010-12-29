@@ -1,6 +1,9 @@
 package Perl::Critic::Utils::Moose;
 use strict;
 use warnings;
+
+# ABSTRACT: utils for Perl::Critic::DynamicMoosePolicy modules
+
 use Sub::Exporter -setup => {
     exports => ['meta_type'],
 };
@@ -18,6 +21,15 @@ my @types = (
     [ 'Class::MOP::Package'            => 'package'         ],
 );
 
+=head1 FUNCTIONS
+
+=over
+
+=item C<meta_type>
+
+Get string type description by Moose metaclass name.
+
+=cut
 sub meta_type {
     my $meta = shift;
 
@@ -28,6 +40,10 @@ sub meta_type {
 
     return undef;
 }
+
+=back
+
+=cut
 
 1;
 
